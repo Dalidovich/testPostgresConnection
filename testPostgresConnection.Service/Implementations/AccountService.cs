@@ -9,6 +9,8 @@ using testPostgresConnection.DAL.Interfaces;
 using testPostgresConnection.Domain.Entities;
 using testPostgresConnection.Domain.Enums;
 using testPostgresConnection.Domain.Response.Base;
+using testPostgresConnection.Domain.SpecificationPattern.CompositeSpecification;
+using testPostgresConnection.Domain.SpecificationPattern.CustomSpecification;
 using testPostgresConnection.Service.Interfaces;
 
 namespace testPostgresConnection.Service.Implementations
@@ -28,7 +30,7 @@ namespace testPostgresConnection.Service.Implementations
         {
             try
             {
-                var account = await _accountRepository.GetAll().FirstOrDefaultAsync(x => x.login == login);
+                var account = await _accountRepository.GetAll().FirstOrDefaultAsync(x=>x.login==login);
                 if (account == null)
                 {
                     return new BaseResponse<Account>()
@@ -56,6 +58,13 @@ namespace testPostgresConnection.Service.Implementations
         {
             try
             {
+                PasswordLengthMoreThenLimit passwordContainDigit = new PasswordLengthMoreThenLimit(2);
+                MultipleChosenId oddId = new MultipleChosenId(2);
+                AndSpecification<Account> and = new AndSpecification<Account>(passwordContainDigit,oddId);
+
+                //use specification
+                //var contents = await _accountRepository.GetAll().Where(and.ToExpression()).ToListAsync();
+
                 var contents = await _accountRepository.GetAll().ToListAsync();
                 if (contents == null)
                 {
