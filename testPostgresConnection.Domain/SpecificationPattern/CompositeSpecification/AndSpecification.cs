@@ -19,8 +19,8 @@ namespace testPostgresConnection.Domain.SpecificationPattern.CompositeSpecificat
             exprBody = (BinaryExpression)new ParameterReplacer(paramExpr).Visit(exprBody);
             var finalExpr = Expression.Lambda<Func<T, bool>>(exprBody, paramExpr);
 
-
             expression = finalExpr;
+
             //expression = Expression.Lambda<Func<T, bool>>
             //    (Expression.And(_spec0.ToExpression().Body,
             //    Expression.Invoke(_spec1.ToExpression(), _spec0.ToExpression().Parameters)), _spec0.ToExpression().Parameters);

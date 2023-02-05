@@ -24,15 +24,24 @@ namespace testPostgresConnection
             {
                 connectionString= reader.ReadToEnd();
             }
-
+            DbContextOptions<AppDBContext> dbContextOptions= new DbContextOptions<AppDBContext>();
+            AppDBContext appDBContext = new AppDBContext(dbContextOptions);
+            appDBContext.UpdateDatabase();
             builder.Services.AddDbContext<AppDBContext>(
                 opt => opt.UseNpgsql(connectionString)
                 );
+            //builder.Services.AddDbContext<AppDBContext>(
+            //    opt => opt.UseNpgsql(connectionString)
+            //    );
 
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
             builder.Services.AddScoped<IAccountService, AccountService>();
 
+
+
+
             var app = builder.Build();
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
