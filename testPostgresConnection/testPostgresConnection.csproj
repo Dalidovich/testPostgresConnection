@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\testPostgresConnection.DAL\testPostgresConnection.DAL.csproj" />
+    <ProjectReference Include="..\testPostgresConnection.Service\testPostgresConnection.Service.csproj" />
   </ItemGroup>
 </Project>

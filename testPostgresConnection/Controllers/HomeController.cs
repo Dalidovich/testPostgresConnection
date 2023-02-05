@@ -6,23 +6,30 @@ using testPostgresConnection.DAL.Interfaces;
 using testPostgresConnection.DAL.Repositories;
 using testPostgresConnection.Domain.Entities;
 using testPostgresConnection.Models;
+using testPostgresConnection.Service.Interfaces;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace testPostgresConnection.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IBaseRepository<Account> _accountRepository;
+        private readonly IAccountService _accountService;
 
-        public HomeController(ILogger<HomeController> logger,IBaseRepository<Account> AccountRepository)
+        public HomeController(ILogger<HomeController> logger, IAccountService accountService)
         {
             _logger = logger;
-            _accountRepository = AccountRepository;
+            _accountService = accountService;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(_accountRepository.GetAll().AsEnumerable());
+            var response = await _accountService.GetAll();
+            if (response.StatusCode == Domain.Enums.StatusCode.AccountRead)
+            {
+                return View(response.Data);
+            }
+            return RedirectToAction("Error");
         }
 
         public IActionResult Privacy()

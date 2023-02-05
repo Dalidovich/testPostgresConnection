@@ -5,6 +5,8 @@ using testPostgresConnection.DAL;
 using testPostgresConnection.DAL.Interfaces;
 using testPostgresConnection.DAL.Repositories;
 using testPostgresConnection.Domain.Entities;
+using testPostgresConnection.Service.Implementations;
+using testPostgresConnection.Service.Interfaces;
 
 namespace testPostgresConnection
 {
@@ -27,7 +29,8 @@ namespace testPostgresConnection
                 opt => opt.UseNpgsql(connectionString)
                 );
 
-            builder.Services.AddScoped<IBaseRepository<Account>, AccountRepository>();
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.

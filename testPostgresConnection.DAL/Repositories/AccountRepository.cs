@@ -8,7 +8,7 @@ using testPostgresConnection.Domain.Entities;
 
 namespace testPostgresConnection.DAL.Repositories
 {
-    public class AccountRepository : IBaseRepository<Account>
+    public class AccountRepository : IAccountRepository
     {
         private readonly AppDBContext _db;
 
