@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using testPostgresConnection.DAL;
+using testPostgresConnection.DAL.Interfaces;
+using testPostgresConnection.DAL.Repositories;
+using testPostgresConnection.Domain.Entities;
 using testPostgresConnection.Models;
 
 namespace testPostgresConnection.Controllers
@@ -8,17 +12,17 @@ namespace testPostgresConnection.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly AppDBContext _appDBContext;
+        private readonly IBaseRepository<Account> _accountRepository;
 
-        public HomeController(ILogger<HomeController> logger,AppDBContext appDBContext)
+        public HomeController(ILogger<HomeController> logger,IBaseRepository<Account> AccountRepository)
         {
             _logger = logger;
-            _appDBContext = appDBContext;
+            _accountRepository = AccountRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_appDBContext.user.AsEnumerable());
+            return View(_accountRepository.GetAll().AsEnumerable());
         }
 
         public IActionResult Privacy()

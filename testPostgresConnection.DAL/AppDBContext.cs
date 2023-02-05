@@ -16,6 +16,6 @@ namespace testPostgresConnection.DAL
         {
             modelBuilder.UseSerialColumns();
         }
-        public DbSet<UserDB> user { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

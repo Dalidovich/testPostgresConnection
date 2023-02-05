@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using testPostgresConnection.DAL;
+using testPostgresConnection.DAL.Interfaces;
+using testPostgresConnection.DAL.Repositories;
+using testPostgresConnection.Domain.Entities;
 
 namespace testPostgresConnection
 {
@@ -23,6 +26,9 @@ namespace testPostgresConnection
             builder.Services.AddDbContext<AppDBContext>(
                 opt => opt.UseNpgsql(connectionString)
                 );
+
+            builder.Services.AddScoped<IBaseRepository<Account>, AccountRepository>();
+
             var app = builder.Build();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

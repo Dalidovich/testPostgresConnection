@@ -1,5 +1,5 @@
 ﻿@using testPostgresConnection.Domain.Entities;
-@model IEnumerable<UserDB>
+@model IEnumerable<Account>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -10,5 +10,11 @@
 </div>
 @foreach (var item in Model)
 {
-    @item.login
+    <div>
+    @item.accountId<br>
+    @item.login<br>
+    @item.password<br>
+    @item.about<br>
+    </div>
+    <br>
 }

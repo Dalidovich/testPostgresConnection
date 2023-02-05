@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace testPostgresConnection.Domain.Entities
 {
-    public class UserDB
+    public class Account
     {
         [Key]
-        public long userId{ get; set; }
+        public long accountId{ get; set; }
         public string login { get; set; } = null!;
+        public string password { get; set; } = null!;
+        public string about { get; set; } = null!;
     }
 }
