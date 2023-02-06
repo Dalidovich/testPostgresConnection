@@ -9,8 +9,9 @@ using testPostgresConnection.Domain.Entities;
 
 namespace testPostgresConnection.DAL
 {
-    public class AppDBContext:DbContext
+    public class AppDBContext : DbContext
     {
+        public static string ConnectionString { get; set; }
         public AppDBContext(DbContextOptions<AppDBContext> options) : base(options) { }
         public void UpdateDatabase()
         {
@@ -21,7 +22,8 @@ namespace testPostgresConnection.DAL
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Server=localhost;Database=testForGitIgnore;Port=5432;User Id=postgres;Password=pg");
+                optionsBuilder.UseNpgsql(ConnectionString);
+                //optionsBuilder.UseNpgsql("Server=localhost;Database=testForGitIgnore;Port=5432;User Id=postgres;Password=pg");
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

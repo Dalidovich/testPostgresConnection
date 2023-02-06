@@ -16,29 +16,19 @@ namespace testPostgresConnection
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            AppDBContext.ConnectionString= builder.Configuration["ConnectionStrings"];
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            string connectionString = "";
-            using (StreamReader reader = new StreamReader("connectionString.txt"))
-            {
-                connectionString= reader.ReadToEnd();
-            }
             DbContextOptions<AppDBContext> dbContextOptions= new DbContextOptions<AppDBContext>();
+            DbContextOptionsBuilder<AppDBContext> dbContextOptionsBuilder = new DbContextOptionsBuilder<AppDBContext>().UseNpgsql(AppDBContext.ConnectionString);
             AppDBContext appDBContext = new AppDBContext(dbContextOptions);
-            appDBContext.UpdateDatabase();
-            builder.Services.AddDbContext<AppDBContext>(
-                opt => opt.UseNpgsql(connectionString)
-                );
-            //builder.Services.AddDbContext<AppDBContext>(
-            //    opt => opt.UseNpgsql(connectionString)
-            //    );
+            //appDBContext.UpdateDatabase();
+
+            builder.Services.AddDbContext<AppDBContext>(opt => opt.UseNpgsql(AppDBContext.ConnectionString));
 
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
             builder.Services.AddScoped<IAccountService, AccountService>();
-
-
-
 
             var app = builder.Build();
 
